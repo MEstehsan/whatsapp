@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -7,32 +8,49 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import { Fontisto } from '@expo/vector-icons';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Chats"
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].background,
+        style: { backgroundColor: Colors[colorScheme].tint },
+        indicatorStyle: { backgroundColor: Colors[colorScheme].background },
+        labelStyle: { fontWeight: 'bold' },
+        showIcon: true,
+      }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Camera"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Fontisto name="camera" size={20} color="white" />,
+          tabBarLabel: () => null,
+
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Chats"
         component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
+
       />
-    </BottomTab.Navigator>
+      <BottomTab.Screen
+        name="Status"
+        component={TabTwoNavigator}
+
+      />
+      <BottomTab.Screen
+        name="Calls"
+        component={TabTwoNavigator}
+
+      />
+    </BottomTab.Navigator >
   );
 }
 
